@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Redbridge — Independent Treasury, Debt & Risk Advisory</title>
+<meta name="description" content="Redbridge is an independent treasury and debt advisory firm partnering with global corporates and sponsors to optimise financing, manage risk and improve performance." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+:root{
+  --rb-charcoal:#0F1115; --rb-coal:#1A1D24; --rb-coal-2:#262A33;
+  --rb-red:#B5141A; --rb-red-2:#8B0E12; --rb-red-soft:#E25358;
+  --rb-bone:#F4F1EB; --rb-paper:#FAF8F4; --rb-line:#E5E1D7;
+  --rb-text:#14171D; --rb-muted:#5C6573;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;color:var(--rb-text);background:#fff;-webkit-font-smoothing:antialiased}
+.font-display{font-family:'Space Grotesk',sans-serif;letter-spacing:-.01em}
+.bg-coal{background:var(--rb-coal)}.bg-coal-2{background:var(--rb-coal-2)}.bg-charcoal{background:var(--rb-charcoal)}
+.bg-bone{background:var(--rb-bone)}.bg-paper{background:var(--rb-paper)}.bg-red{background:var(--rb-red)}
+.text-charcoal{color:var(--rb-charcoal)}.text-coal{color:var(--rb-coal)}
+.text-red{color:var(--rb-red)}.text-muted{color:var(--rb-muted)}
+.border-line{border-color:var(--rb-line)}.border-red{border-color:var(--rb-red)}
+.rb-header{backdrop-filter:saturate(180%) blur(10px);background:rgba(15,17,21,.78);border-bottom:1px solid rgba(255,255,255,.06);transition:all .3s ease}
+.rb-header.scrolled{background:rgba(15,17,21,.96);box-shadow:0 4px 24px rgba(0,0,0,.4)}
+.rb-nav-link{position:relative;padding:.25rem 0;color:#D2D6DD}
+.rb-nav-link::after{content:"";position:absolute;bottom:-6px;left:0;right:0;height:2px;background:var(--rb-red);transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
+.rb-nav-link:hover::after,.rb-nav-link.active::after{transform:scaleX(1)}
+.rb-nav-link:hover,.rb-nav-link.active{color:#fff}
+.btn-primary{display:inline-flex;align-items:center;gap:.5rem;background:var(--rb-red);color:#fff;padding:.85rem 1.6rem;font-weight:600;letter-spacing:.01em;transition:all .25s ease;border-radius:2px;cursor:pointer;border:none}
+.btn-primary:hover{background:var(--rb-red-2);transform:translateY(-1px);box-shadow:0 10px 24px -8px rgba(181,20,26,.55)}
+.btn-dark{display:inline-flex;align-items:center;gap:.5rem;background:var(--rb-charcoal);color:#fff;padding:.85rem 1.6rem;font-weight:500;letter-spacing:.01em;transition:all .25s ease;border-radius:2px;cursor:pointer;border:none}
+.btn-dark:hover{background:var(--rb-coal-2);transform:translateY(-1px)}
+.btn-outline{display:inline-flex;align-items:center;gap:.5rem;border:1px solid currentColor;padding:.8rem 1.55rem;transition:all .25s ease;border-radius:2px;cursor:pointer;background:transparent;font-weight:500}
+.btn-outline:hover{background:rgba(255,255,255,.07)}
+.hero-grad{background:radial-gradient(900px 500px at 85% 10%,rgba(181,20,26,.32),transparent 60%),radial-gradient(700px 400px at 10% 90%,rgba(181,20,26,.14),transparent 60%),linear-gradient(180deg,var(--rb-charcoal) 0%,#0A0C10 100%)}
+.grid-bg{background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:64px 64px}
+.skeleton{background:linear-gradient(90deg,#E5E1D7 0%,#F4F1EB 50%,#E5E1D7 100%);background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:2px}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .8s ease,transform .8s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+.reveal.delay-1{transition-delay:.08s}.reveal.delay-2{transition-delay:.16s}.reveal.delay-3{transition-delay:.24s}.reveal.delay-4{transition-delay:.32s}
+.card{background:#fff;border:1px solid var(--rb-line);transition:all .3s ease}
+.card:hover{transform:translateY(-3px);box-shadow:0 18px 40px -22px rgba(0,0,0,.15);border-color:var(--rb-red)}
+.service-card{position:relative;background:#fff;border:1px solid var(--rb-line);transition:all .3s ease;cursor:pointer;overflow:hidden}
+.service-card::after{content:"";position:absolute;left:0;right:0;bottom:0;height:0;background:var(--rb-red);transition:height .3s ease}
+.service-card:hover{background:var(--rb-paper);border-color:var(--rb-charcoal)}
+.service-card:hover::after{height:3px}
+.insight-tile{background:#fff;border:1px solid var(--rb-line);transition:all .3s ease;cursor:pointer;overflow:hidden}
+.insight-tile:hover{box-shadow:0 24px 40px -24px rgba(0,0,0,.15);border-color:var(--rb-red)}
+.insight-tile:hover .thumb-overlay{opacity:1}
+.insight-thumb{height:200px;position:relative;overflow:hidden;background:linear-gradient(135deg,var(--rb-charcoal) 0%,var(--rb-coal-2) 100%)}
+.insight-thumb::after{content:"";position:absolute;inset:0;background-image:radial-gradient(circle at 80% 20%,rgba(181,20,26,.4),transparent 50%),linear-gradient(135deg,rgba(255,255,255,.03),transparent 60%)}
+.thumb-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.75));opacity:.6;transition:opacity .3s ease;z-index:1}
+.stat-num{font-variant-numeric:tabular-nums;font-family:'Space Grotesk',sans-serif}
+.input,.select,.textarea{width:100%;padding:.85rem 1rem;background:#fff;border:1px solid var(--rb-line);border-radius:2px;font-size:.95rem;transition:all .2s ease;font-family:inherit;color:var(--rb-text)}
+.input:focus,.select:focus,.textarea:focus{outline:none;border-color:var(--rb-red);box-shadow:0 0 0 3px rgba(181,20,26,.15)}
+.toast{position:fixed;bottom:24px;right:24px;z-index:200;padding:14px 20px;background:var(--rb-charcoal);color:#fff;border-left:3px solid var(--rb-red);box-shadow:0 16px 40px -10px rgba(0,0,0,.3);transform:translateY(20px);opacity:0;transition:all .3s ease;max-width:380px}
+.toast.show{transform:translateY(0);opacity:1}
+.modal-backdrop{position:fixed;inset:0;background:rgba(15,17,21,.6);backdrop-filter:blur(4px);z-index:90;display:none;align-items:center;justify-content:center;padding:1rem}
+.modal-backdrop.show{display:flex}
+.modal{background:#fff;max-width:560px;width:100%;padding:2.5rem;border-top:3px solid var(--rb-red);position:relative}
+.rb-footer{background:var(--rb-charcoal);color:#B7BCC6}
+.rb-footer a{color:#B7BCC6;transition:color .2s ease}
+.rb-footer a:hover{color:var(--rb-red-soft)}
+.marquee{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.marquee-track{display:flex;gap:3rem;animation:marquee 40s linear infinite;align-items:center}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.loader-bar{position:fixed;top:0;left:0;height:2px;background:var(--rb-red);z-index:300;width:0;transition:width .3s ease,opacity .3s ease}
+.eyebrow{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--rb-red);font-weight:700}
+.divider-red{display:inline-block;width:40px;height:2px;background:var(--rb-red);vertical-align:middle}
+.prose-rb p{margin-bottom:1.1rem;line-height:1.75;color:#2C313A}
+.prose-rb h2{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1.8rem;margin:2rem 0 1rem;color:var(--rb-charcoal)}
+.prose-rb h3{font-weight:700;font-size:1.1rem;margin:1.4rem 0 .5rem;color:var(--rb-charcoal)}
+.prose-rb blockquote{border-left:3px solid var(--rb-red);padding-left:1.25rem;color:var(--rb-charcoal);margin:1.5rem 0;font-family:'Space Grotesk',sans-serif;font-size:1.3rem;font-weight:500;line-height:1.4}
+.prose-rb ul{margin-bottom:1.2rem}
+.prose-rb ul li{padding-left:1rem;position:relative;margin-bottom:.5rem;color:#2C313A;line-height:1.7}
+.prose-rb ul li::before{content:"";position:absolute;left:0;top:.7rem;width:6px;height:6px;background:var(--rb-red)}
+.portal-shell{min-height:calc(100vh - 80px);background:var(--rb-paper)}
+.portal-sidebar{background:var(--rb-charcoal);color:#B7BCC6}
+.portal-sidebar a{display:flex;gap:.75rem;align-items:center;padding:.75rem 1rem;border-radius:2px;transition:all .2s ease;cursor:pointer}
+.portal-sidebar a:hover,.portal-sidebar a.active{background:rgba(181,20,26,.18);color:#fff}
+.kpi{background:#fff;padding:1.5rem;border:1px solid var(--rb-line)}
+.kpi .delta-up{color:#0E7D3A}.kpi .delta-down{color:#B5141A}
+.table{width:100%;border-collapse:collapse}
+.table th,.table td{padding:.85rem 1rem;text-align:left;border-bottom:1px solid var(--rb-line);font-size:.9rem}
+.table th{background:var(--rb-paper);font-weight:600;color:var(--rb-charcoal);font-size:.78rem;text-transform:uppercase;letter-spacing:.05em}
+.table tr:hover td{background:#FAF8F4}
+.pill{display:inline-block;padding:.15rem .65rem;border-radius:2px;font-size:.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.pill-red{background:rgba(181,20,26,.12);color:var(--rb-red-2)}
+.pill-green{background:rgba(14,125,58,.12);color:#0E7D3A}
+.pill-grey{background:rgba(15,17,21,.08);color:var(--rb-charcoal)}
+.pill-amber{background:rgba(217,119,6,.14);color:#9A5400}
+.page-enter{animation:pageEnter .5s ease both}
+@keyframes pageEnter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.spin{animation:spin 1s linear infinite}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.mobile-nav{position:fixed;inset:0;background:var(--rb-charcoal);z-index:80;display:none;flex-direction:column;padding:6rem 2rem}
+.mobile-nav.open{display:flex}
+.mobile-nav a{color:#fff;font-size:1.5rem;padding:1rem 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--rb-red);display:inline-block;vertical-align:middle;margin-right:.5rem}
+.tab{padding:.75rem 1.25rem;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s ease;color:var(--rb-muted);font-weight:500;font-size:.9rem}
+.tab.active{color:var(--rb-charcoal);border-color:var(--rb-red)}
+.tab:hover:not(.active){color:var(--rb-charcoal)}
+.accordion-item{border-bottom:1px solid var(--rb-line)}
+.accordion-trigger{display:flex;justify-content:space-between;align-items:center;width:100%;padding:1.4rem 0;text-align:left;cursor:pointer;background:none;border:none;font-size:1.05rem;font-weight:600;color:var(--rb-charcoal);font-family:'Space Grotesk',sans-serif}
+.accordion-content{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease;color:var(--rb-muted);line-height:1.7;font-size:.95rem}
+.accordion-item.open .accordion-content{max-height:500px;padding-bottom:1.4rem}
+.accordion-item.open .accordion-icon{transform:rotate(45deg)}
+.accordion-icon{transition:transform .25s ease;color:var(--rb-red)}
+@media(max-width:768px){.hide-mobile{display:none!important}}
+@media(min-width:769px){.show-mobile{display:none!important}}
+.tick-row{display:flex;align-items:baseline;gap:.5rem;font-family:'Space Grotesk',sans-serif;font-size:.85rem;color:#D2D6DD}
+.tick-row .lbl{color:#888E99;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em}
+.tick-row .val{font-weight:600;color:#fff}
+.tick-row .chg{font-size:.75rem;padding:.05rem .35rem;border-radius:2px;font-weight:600}
+.chg-up{background:rgba(14,125,58,.2);color:#3FBF67}.chg-down{background:rgba(181,20,26,.22);color:#FF6B70}
+.framework-step{position:relative;padding-left:3.5rem}
+.framework-step::before{content:attr(data-n);position:absolute;left:0;top:.1rem;font-family:'Space Grotesk',sans-serif;font-size:2.2rem;font-weight:700;color:var(--rb-red);line-height:1}
+.framework-step::after{content:"";position:absolute;left:3.2rem;top:2.5rem;bottom:-2rem;width:1px;background:var(--rb-line)}
+.framework-step:last-child::after{display:none}
+</style>
+</head>
+<body>
+
+<div id="loaderBar" class="loader-bar"></div>
+
+<!-- HEADER -->
+<header id="header" class="rb-header sticky top-0 z-40">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="flex items-center justify-between h-20">
+      <a href="#/home" class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-red flex items-center justify-center" style="border-radius:2px">
+          <span class="font-display text-white text-xl font-bold leading-none">R</span>
+        </div>
+        <div>
+          <div class="font-display text-xl text-white font-semibold leading-tight">Redbridge</div>
+          <div class="text-[10px] tracking-[.22em] text-[#888E99] uppercase">Treasury · Debt · Risk</div>
+        </div>
+      </a>
+      <nav class="hide-mobile flex items-center gap-9 text-sm">
+        <a href="#/home" class="rb-nav-link">Home</a>
+        <a href="#/about" class="rb-nav-link">About</a>
+        <a href="#/services" class="rb-nav-link">Services</a>
+        <a href="#/insights" class="rb-nav-link">Insights & Data</a>
+        <a href="#/contact" class="rb-nav-link">Contact</a>
+      </nav>
+      <div class="hide-mobile flex items-center gap-3">
+        <a href="#/portal" class="text-sm text-[#D2D6DD] hover:text-white flex items-center gap-1.5">
+          <i data-lucide="lock" class="w-4 h-4"></i> Treasury Portal
+        </a>
+        <a href="#/contact" class="btn-primary text-sm">Start a Mandate</a>
+      </div>
+      <button id="menuBtn" class="show-mobile p-2" aria-label="Menu"><i data-lucide="menu" class="w-6 h-6 text-white"></i></button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile nav -->
+<div id="mobileNav" class="mobile-nav">
+  <button id="menuClose" class="absolute top-6 right-6 text-white"><i data-lucide="x" class="w-7 h-7"></i></button>
+  <a href="#/home" data-mobile>Home</a>
+  <a href="#/about" data-mobile>About</a>
+  <a href="#/services" data-mobile>Services</a>
+  <a href="#/insights" data-mobile>Insights & Data</a>
+  <a href="#/contact" data-mobile>Contact</a>
+  <a href="#/portal" data-mobile><i data-lucide="lock" class="inline w-4 h-4 mr-1"></i> Treasury Portal</a>
+</div>
+
+<!-- APP ROOT -->
+<main id="app" class="min-h-screen"></main>
+
+<!-- FOOTER -->
+<footer class="rb-footer mt-24">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16">
+    <div class="grid md:grid-cols-4 gap-10">
+      <div class="md:col-span-2">
+        <div class="flex items-center gap-3 mb-5">
+          <div class="w-10 h-10 bg-red flex items-center justify-center"><span class="font-display text-white text-xl font-bold leading-none">R</span></div>
+          <div>
+            <div class="font-display text-xl text-white font-semibold">Redbridge</div>
+            <div class="text-[10px] tracking-[.22em] text-[#888E99] uppercase">Treasury · Debt · Risk</div>
+          </div>
+        </div>
+        <p class="text-sm leading-relaxed max-w-md text-[#9098A4]">Independent treasury, debt and risk advisors to global corporates, sponsors and growth companies. We work only for you — never for a bank.</p>
+        <div class="mt-6 flex gap-3">
+          <a href="#" class="w-10 h-10 border border-white/15 flex items-center justify-center hover:border-red transition"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+          <a href="#" class="w-10 h-10 border border-white/15 flex items-center justify-center hover:border-red transition"><i data-lucide="twitter" class="w-4 h-4"></i></a>
+          <a href="#" class="w-10 h-10 border border-white/15 flex items-center justify-center hover:border-red transition"><i data-lucide="youtube" class="w-4 h-4"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4 class="text-white font-semibold text-xs tracking-[.18em] uppercase mb-4">Firm</h4>
+        <ul class="space-y-3 text-sm">
+          <li><a href="#/about">About</a></li>
+          <li><a href="#/services">Services</a></li>
+          <li><a href="#/insights">Insights & Data</a></li>
+          <li><a href="#/contact">Careers</a></li>
+          <li><a href="#/portal">Treasury Portal</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-white font-semibold text-xs tracking-[.18em] uppercase mb-4">Offices</h4>
+        <ul class="space-y-3 text-sm">
+          <li><strong class="text-white block">London (HQ)</strong>22 Bishopsgate, EC2N 4BQ</li>
+          <li><strong class="text-white block">Paris</strong>11 Rue Royale, 75008</li>
+          <li><strong class="text-white block">Houston</strong>1100 Louisiana St, 77002</li>
+          <li><strong class="text-white block">New York</strong>500 Fifth Avenue, 10110</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mt-14 pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between gap-4 text-xs text-[#7F8694]">
+      <div>© 2026 Redbridge Advisory Group. All rights reserved. An independent advisor regulated by the FCA in the UK and the AMF in France.</div>
+      <div class="flex gap-6"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Modern Slavery</a><a href="#">Conflicts Policy</a></div>
+    </div>
+  </div>
+</footer>
+
+<!-- Toast -->
+<div id="toast" class="toast"></div>
+
+<!-- Modal -->
+<div id="modal" class="modal-backdrop"><div class="modal" id="modalBody"></div></div>
+
+<script>
+/* ===================================================================
+   MOCK API LAYER
+   =================================================================== */
+const DATA = {
+  site: {
+    debtAdvised: 184,         // $B
+    mandates: 1820,
+    countries: 32,
+    advisors: 240,
+    years: 26
+  },
+  services: [
+    { id:'debt-advisory', icon:'banknote', title:'Debt Advisory', tagline:'Financing structures that maximise optionality',
+      summary:'Independent advice across the full debt capital structure — from revolving credit facilities to high-yield bonds and private placements. We negotiate terms and pricing on your behalf, never on behalf of a bank.',
+      points:['Bank debt origination & refinancing','High-yield & investment-grade bonds','Private placement & direct lending','Covenant negotiation','Term sheet benchmarking','Lender relationship strategy'] },
+    { id:'treasury-advisory', icon:'wallet', title:'Treasury Advisory', tagline:'Operating models for modern treasury teams',
+      summary:'Design and implementation of treasury organisations that scale. From target operating models to bank rationalisation, cash visibility and TMS selection.',
+      points:['Target operating model design','Cash visibility & in-house bank','TMS selection & implementation','Bank account & relationship rationalisation','Treasury policy & controls'] },
+    { id:'risk-advisory', icon:'shield', title:'Interest Rate, FX & Commodity Risk',
+      tagline:'Hedging programmes that pass independent scrutiny',
+      summary:'Independent advice on hedging strategy, instrument selection, execution and post-trade lifecycle — across rates, FX and commodities.',
+      points:['Hedging policy & strategy','Independent execution oversight','xVA & counterparty risk','Hedge accounting (IFRS 9)','Post-trade lifecycle & valuations'] },
+    { id:'working-capital', icon:'recycle', title:'Working Capital & Trade Finance',
+      tagline:'Release cash from your balance sheet',
+      summary:'Working capital optimisation programmes — payables, receivables and inventory — combined with trade finance and supply chain finance solutions.',
+      points:['Working capital diagnostic','Receivables & payables programmes','Supply chain finance design','Inventory financing','Trade finance facility structuring'] },
+    { id:'transactions', icon:'handshake', title:'Transaction Financing',
+      tagline:'Acquisition, LBO and refinancing support',
+      summary:'Buy-side and refinancing support for corporates and sponsors. Independent process leadership, market benchmarking and lender selection across the deal lifecycle.',
+      points:['Acquisition financing','LBO & sponsor-backed deals','Refinancing & A&E processes','Rating advisory','Debt due diligence (sell-side)'] },
+    { id:'ratings-capital', icon:'star', title:'Rating & Capital Structure',
+      tagline:'Defending and improving your credit profile',
+      summary:'Rating agency advisory and long-term capital structure design — for issuers, sponsors and family-owned corporates considering public debt for the first time.',
+      points:['Rating agency advisory','Capital structure optimisation','Hybrid & subordinated capital','Inaugural issuer support','Investor relations strategy'] }
+  ],
+  framework: [
+    { n:'01', t:'Diagnose', d:'Independent benchmark of your existing financing, treasury operations and risk frameworks against best-in-class peers.' },
+    { n:'02', t:'Design', d:'Articulated strategy and target state, fully aligned with management and board. We do not deliver options without conviction.' },
+    { n:'03', t:'Execute', d:'Process leadership through to closing. We sit on your side of the table for every conversation with banks, lenders, agencies and counterparties.' },
+    { n:'04', t:'Embed', d:'Knowledge transfer to your team, post-deal documentation, governance frameworks and ongoing performance monitoring.' }
+  ],
+  insights: [
+    { id:'debt-markets-q2-2026', type:'Market Update', category:'Debt Markets', title:'Debt Markets Quarterly — Q2 2026: Pricing Power Returns to Borrowers',
+      author:'Daniela Aguirre', role:'Head of Debt Capital Markets · Paris', date:'2026-04-30', read:'8 min read',
+      excerpt:'After 18 months of lender dominance, spread compression and reopening high-yield primary issuance are quietly restoring negotiating leverage to investment-grade borrowers.',
+      body:[
+        'After the spread widening of 2024 and the cautious capital deployment of 2025, the Q1 2026 print is unambiguous: pricing power is returning to corporate borrowers.',
+        'h3:What we are seeing in the primary market',
+        'Investment-grade new issuance is trading 38 bps tighter to government on average year-to-date. Tier-1 high-yield reopening is gathering pace, with single-B issuance now meaningfully clearing inside 7%. The leveraged loan market remains the relative laggard — a function of CLO demand normalisation rather than fundamental credit deterioration.',
+        'h3:What this means at the negotiating table',
+        'Three things have shifted decisively in favour of the borrower over the past two quarters:',
+        'ul:Margin grids are widening at the edges — relationship banks are competing harder for top-of-house mandates.|Tenor is extending — five-year RCFs that re-priced in 2024 at three-year levels are now clearing at full tenor.|Covenant baskets are re-loosening — particularly for IG-rated and crossover credits with strong cash conversion.',
+        'q:For borrowers whose facilities mature in 2026 or 2027, the opportunity to reset terms is real — and there is no premium to acting now.',
+        'h3:Our advice to clients',
+        'Refinancing decisions should be brought forward where the discount to par is small and the structural improvement is meaningful. Pricing matters; structure matters more. We are seeing the strongest term improvements not on coupon, but on flexibility — payment baskets, restricted payments, asset sale carve-outs.',
+        'h3:Looking ahead',
+        'Our base case for H2 2026 is continued spread compression in investment grade, with crossover names benefiting most. We see modest re-widening risk in high yield should US growth slow further in the third quarter, but the technical bid for paper remains overwhelming.'
+      ]},
+    { id:'treasury-benchmark-2026', type:'Benchmark', category:'Treasury Operations', title:'Treasury Operations Benchmark 2026 — Speed, Visibility, Resilience',
+      author:'Marcus van der Berg', role:'Head of Treasury Advisory · London', date:'2026-03-21', read:'10 min read',
+      excerpt:'Our 2026 study of 380 corporate treasuries reveals where the leaders are pulling away — and what mid-tier treasuries need to do to catch up.',
+      body:[
+        'Now in its sixth year, the Redbridge Treasury Operations Benchmark draws on data from 380 corporate treasuries across 28 countries — collectively responsible for managing more than $4.2 trillion of cash and risk exposure.',
+        'h3:The four metrics that define modern treasury',
+        'ul:Cash visibility — top-quartile treasuries achieve >95% visibility by 9am; the median sits at 78%.|Bank account density — top quartile manages 1 account per $42M of revenue; median is 1 per $17M.|FX hedge accuracy — top quartile achieves a 6% exposure error rate; median sits above 18%.|TMS adoption — 88% of top-quartile treasuries operate on a cloud-native TMS; the median is still on legacy on-prem.',
+        'h3:Where the gap is widening',
+        'q:The single biggest differentiator in 2026 is not technology — it is operating model maturity.',
+        'Cloud-native TMS adoption has reached saturation in the top quartile, but the second quartile is no longer closing the gap. The differentiator is no longer the toolset — it is how the treasury function is structured, governed and resourced.',
+        'h3:Practical priorities',
+        'ul:Build an in-house bank, even a small one — the operating leverage is immediate.|Rationalise bank account count by 25-40% before any TMS replacement.|Move FX hedge accounting to monthly cadence — quarterly is no longer acceptable.|Treat treasury as a strategic function — board reporting, KPI ownership, executive sponsorship.',
+        'Download the full report from the Treasury Portal.'
+      ]},
+    { id:'fx-hedging-2026', type:'Strategy', category:'Risk', title:'FX Hedging in a Higher-Volatility Regime',
+      author:'Nikhil Bhandari', role:'Head of Risk Solutions · London', date:'2026-03-04', read:'7 min read',
+      excerpt:'Realised FX volatility has stepped up structurally. Treasury teams that have not revisited their hedging policies since 2021 are systematically under-hedged.',
+      body:[
+        'The structural pickup in realised FX volatility since 2024 is the single most consequential development for corporate treasury teams. Yet only 31% of treasuries we surveyed in Q1 had revisited their hedging policy in the past 18 months.',
+        'h3:The new realised vol baseline',
+        'Major currency realised vols are now running 25–40% above their 2018-2021 average. This is not a cyclical phenomenon — it reflects structural shifts in policy regimes, reserve allocation and trade flows.',
+        'h3:Three policy implications',
+        'ul:Hedge ratios calibrated in 2021 are no longer fit for purpose. Most policies need to extend tenor and increase static hedge ratios.|Layered hedging programmes outperform static ones by a measurable margin in higher-vol regimes.|Option strategies regain relevance — risk reversals and seagulls offer meaningful cost-of-carry savings in steep vol surfaces.',
+        'q:Most treasuries are reading 2018-vintage maps in 2026 weather.',
+        'h3:What good looks like',
+        'A documented hedging policy with explicit triggers for review, a layered hedging programme with clear roll mechanics, and an annual independent benchmark of execution quality.'
+      ]},
+    { id:'case-eu-corporate', type:'Case Study', category:'Debt Advisory', title:'Case Study: €1.4bn Refinancing for a European Industrial Group',
+      author:'Daniela Aguirre', role:'Head of Debt Capital Markets · Paris', date:'2026-02-15', read:'5 min read',
+      excerpt:'How a structured, competitive process generated 45 bps of margin savings and unlocked an additional €350M of incremental facility.',
+      body:[
+        'Client: a European industrial group with €4.2B of revenues, BBB- rated, with a syndicated bank facility maturing in 2027.',
+        'h3:Diagnosis',
+        'The existing €1.05B facility had been arranged in 2020 on terms that had become uncompetitive. Pricing benchmarks showed a 30-50 bps gap to peer issuance; documentation included restrictive baskets that had hampered three recent bolt-on acquisitions.',
+        'h3:Process',
+        'We led a structured RFP across 14 lenders — eight existing relationships and six new entrants. The competitive tension generated tier-1 responses across all three workstreams: pricing, structure and incremental capacity.',
+        'h3:Outcome',
+        'q:€1.4bn facility closed at 45 bps tighter than incumbent pricing — and with €350M of incremental capacity to support acquisition strategy.',
+        'The new documentation extends tenor by 24 months, increases acquisition baskets by 60%, and removes the most restrictive of the prior covenants. Total all-in saving over the life of the facility exceeds €52M.'
+      ]},
+    { id:'case-us-sponsor', type:'Case Study', category:'Transactions', title:'Case Study: $720M LBO Financing for a US Healthcare Sponsor',
+      author:'Rebecca Tang', role:'Head of Transactions · New York', date:'2026-01-22', read:'4 min read',
+      excerpt:'Independent process leadership generated three deliverable financing structures and saved 75 bps versus the sponsor’s initial counsel.',
+      body:[
+        'Client: a US-based healthcare-focused private equity sponsor executing a take-private of a publicly-listed services business.',
+        'h3:The challenge',
+        'A 60-day exclusivity window, an asset that required a non-standard funding structure (combination of unitranche and ABL), and an incumbent direct lender pushing aggressive terms.',
+        'h3:Approach',
+        'We ran a parallel process across direct lending and traditional broadly-syndicated structures. Three credible structures were delivered to committee within 35 days.',
+        'h3:Outcome',
+        'q:75 bps of margin savings over the sponsor’s initial counsel proposal. Closed two weeks ahead of schedule.'
+      ]},
+    { id:'tms-selection', type:'Playbook', category:'Treasury Operations', title:'TMS Selection — A Practical Playbook',
+      author:'Marcus van der Berg', role:'Head of Treasury Advisory · London', date:'2025-12-09', read:'9 min read',
+      excerpt:'After 80+ TMS selections in the past three years, the patterns are clear. This playbook distils what makes a TMS programme succeed.',
+      body:[
+        'A treasury management system is one of the most consequential and least frequently made decisions a treasury function will face. Get it right and it underwrites a decade of operating leverage. Get it wrong and you will be paying the structural cost for as long.',
+        'h3:Phase 1 — Foundations (4–6 weeks)',
+        'Build the requirements document properly. The single biggest predictor of project failure is a thin or politically negotiated requirements set. Spend the time.',
+        'h3:Phase 2 — RFP and short-list (8–10 weeks)',
+        'Issue a structured RFP to a credible long-list of 5–7 vendors. Conduct live scripted demos against your actual use cases — not vendor-led marketing demos.',
+        'q:If you cannot operate the demo yourself, you will not be able to operate the system.',
+        'h3:Phase 3 — Selection and contracting (4 weeks)',
+        'Negotiate the commercial and SLA terms hard. The post-signature negotiating leverage is materially worse than before, and you will pay for it for the next decade.',
+        'h3:Phase 4 — Implementation (6–12 months)',
+        'Run the implementation as a programme, not a project. Treasury, IT, banking and external advisors all carry workstream accountability.'
+      ]}
+  ],
+  team: [
+    { name:'Marcus van der Berg', role:'Head of Treasury Advisory · London', bio:'Twenty-three years across corporate treasury, banking and consulting. Architect of the firm’s Treasury Operations Benchmark.', initials:'MB' },
+    { name:'Daniela Aguirre', role:'Head of Debt Capital Markets · Paris', bio:'Former head of EMEA syndicate at a major investment bank. Has led more than €40bn of corporate debt mandates over her career.', initials:'DA' },
+    { name:'Nikhil Bhandari', role:'Head of Risk Solutions · London', bio:'Two decades in derivatives execution and risk management. Designs the firm’s hedging methodologies across rates, FX and commodities.', initials:'NB' },
+    { name:'Rebecca Tang', role:'Head of Transactions · New York', bio:'Sponsor-side debt advisory specialist with a focus on healthcare and consumer. Closed more than $35B of transactions since 2018.', initials:'RT' },
+    { name:'Carlos Moreno', role:'Head of Houston Office · Energy', bio:'Energy treasury and commodity risk specialist. Twenty years across upstream, midstream and renewable financing.', initials:'CM' },
+    { name:'Sophie Lambert', role:'Head of Working Capital', bio:'Operational treasury and working capital programme designer. Led €18bn of programmes across European corporates.', initials:'SL' },
+    { name:'David Park', role:'Head of Rating Advisory', bio:'Former senior credit analyst at a major rating agency. Advises issuers on capital structure and inaugural-issuer support.', initials:'DP' },
+    { name:'Jana Novak', role:'Head of Technology & Data', bio:'Leads the firm’s benchmarking platform and the Treasury Portal. Background in fintech and treasury technology.', initials:'JN' }
+  ],
+  jobs: [
+    { id:1, title:'Director, Debt Capital Markets', location:'London', team:'Debt Advisory', type:'Permanent' },
+    { id:2, title:'Senior Consultant, Treasury Advisory', location:'Paris', team:'Treasury', type:'Permanent' },
+    { id:3, title:'Vice President, Sponsor Finance', location:'New York', team:'Transactions', type:'Permanent' },
+    { id:4, title:'Senior Risk Advisor — FX & Rates', location:'London', team:'Risk Solutions', type:'Permanent' },
+    { id:5, title:'Data & Benchmarking Engineer', location:'Remote (EU)', team:'Technology', type:'Permanent' },
+    { id:6, title:'Working Capital Programme Manager', location:'Frankfurt', team:'Working Capital', type:'Permanent' },
+    { id:7, title:'Analyst, Energy Treasury', location:'Houston', team:'Energy', type:'Permanent' },
+    { id:8, title:'Manager, Rating Advisory', location:'London', team:'Rating Advisory', type:'Permanent' }
+  ],
+  testimonials: [
+    { quote:'Redbridge sat on our side of the table from day one. The market intelligence they brought to every conversation paid for the engagement many times over.', author:'Group Treasurer, FTSE 100 Industrial' },
+    { quote:'Independent, technically excellent, and unfailingly direct. The benchmark of what an advisory firm should be.', author:'CFO, European Mid-Cap' },
+    { quote:'They closed a complex refinancing two weeks ahead of schedule and 45 bps inside our internal target. That is a real number.', author:'Director of Capital Markets, Industrial Group' }
+  ],
+  clients: [
+    'Northland Industries','Verdant Energy','Riverside Capital','Atlas Materials','Beacon Healthcare',
+    'Linden Logistics','Strand Foods','Coastal Utilities','Marbury Group','Halcyon Healthcare',
+    'Granite Mining','Westland Pharma'
+  ],
+  treasury: {
+    cashTotal: 1842600000,
+    cashChange: 12400000,
+    cashChangePct: 0.68,
+    rcfUtilisation: 38.2,
+    avgFundingRate: 5.42,
+    bankAccounts: 142,
+    bankChange: -8,
+    fxExposureCovered: 87.4,
+    hedgeMTM: -3240000,
+    cashByCurrency: [
+      { ccy:'USD', value:842, color:'#B5141A' },
+      { ccy:'EUR', value:584, color:'#1A1D24' },
+      { ccy:'GBP', value:218, color:'#5C6573' },
+      { ccy:'CHF', value:108, color:'#E25358' },
+      { ccy:'Other', value:90.6, color:'#9098A4' }
+    ],
+    facilities: [
+      { name:'Senior Multi-Currency RCF — Tranche A', type:'RCF', limit:1200000000, drawn:480000000, maturity:'2029-06-30', status:'Active' },
+      { name:'USD Term Loan B', type:'Term Loan', limit:800000000, drawn:800000000, maturity:'2030-03-15', status:'Active' },
+      { name:'5.875% Senior Unsecured Notes', type:'HY Bond', limit:500000000, drawn:500000000, maturity:'2031-04-01', status:'Active' },
+      { name:'Receivables Securitisation Programme', type:'Securitisation', limit:350000000, drawn:298000000, maturity:'2028-09-30', status:'Active' },
+      { name:'Working Capital Facility — Euro', type:'WCF', limit:250000000, drawn:0, maturity:'2027-12-31', status:'Stand-by' }
+    ],
+    activity: [
+      { date:'2026-05-19', type:'Drawing', detail:'RCF drawdown — €120,000,000 funding intercompany dividend', status:'Settled' },
+      { date:'2026-05-15', type:'Hedge', detail:'12-month USD/EUR forward strip executed — $480M notional', status:'Executed' },
+      { date:'2026-05-12', type:'Rating', detail:'S&P confirms BBB / Stable outlook', status:'Confirmed' },
+      { date:'2026-05-09', type:'Bank', detail:'Rationalisation Phase II — 14 bank accounts closed', status:'Complete' },
+      { date:'2026-05-02', type:'Report', detail:'Treasury Operations Benchmark 2026 — your placement', status:'Available' }
+    ],
+    rateHistory: {
+      labels:['Q1 25','Q2 25','Q3 25','Q4 25','Q1 26','Q2 26 YTD'],
+      sofr:[5.32,5.31,5.26,5.18,5.05,4.92],
+      euribor:[3.84,3.81,3.62,3.41,3.18,2.94],
+      sonia:[5.18,5.12,5.04,4.92,4.78,4.64]
+    },
+    fxExposure:[
+      { pair:'USD/EUR', exposure:480000000, hedged:88, mtm:-1850000 },
+      { pair:'GBP/EUR', exposure:240000000, hedged:92, mtm:-620000 },
+      { pair:'CHF/EUR', exposure:120000000, hedged:75, mtm:-410000 },
+      { pair:'JPY/USD', exposure:80000000, hedged:81, mtm:-280000 },
+      { pair:'BRL/USD', exposure:65000000, hedged:0, mtm:-80000 }
+    ]
+  },
+  // Live "market ticker" data — animates
+  ticker: [
+    { lbl:'SOFR O/N', val:'4.92', chg:'-0.03' },
+    { lbl:'EURIBOR 3M', val:'2.94', chg:'-0.04' },
+    { lbl:'SONIA O/N', val:'4.64', chg:'-0.02' },
+    { lbl:'EUR/USD', val:'1.0842', chg:'+0.0021' },
+    { lbl:'GBP/USD', val:'1.2614', chg:'-0.0008' },
+    { lbl:'iTraxx Main', val:'62.4', chg:'-1.2' },
+    { lbl:'CDX IG', val:'58.1', chg:'-0.9' },
+    { lbl:'Brent', val:'$78.42', chg:'+0.62' }
+  ]
+};
+const api = {
+  delay: ms => new Promise(r=>setTimeout(r,ms)),
+  async get(path,opts={}){
+    showLoaderBar();
+    await this.delay(220 + Math.random()*280);
+    hideLoaderBar();
+    const parts = path.split('/').filter(Boolean);
+    let v = DATA;
+    for(const p of parts){ if(v && p in v) v = v[p]; else return null; }
+    if(opts.filter && Array.isArray(v)) v = v.filter(opts.filter);
+    if(opts.find && Array.isArray(v)) return v.find(opts.find);
+    return JSON.parse(JSON.stringify(v));
+  },
+  async submit(endpoint,payload){
+    showLoaderBar();
+    await this.delay(700 + Math.random()*500);
+    hideLoaderBar();
+    return { ok:true, id:'RB-'+Date.now().toString(36).toUpperCase(), receivedAt:new Date().toISOString(), echo:payload };
+  },
+  async login(email,password){
+    showLoaderBar();
+    await this.delay(900);
+    hideLoaderBar();
+    if(!email || !password) return { ok:false, error:'Please enter email and password.' };
+    if(password.length<4) return { ok:false, error:'Invalid credentials.' };
+    return { ok:true, user:{ name:'Catherine Wright', accountId:'RB-TR-2188', team:'Group Treasury', advisor:'Marcus van der Berg' } };
+  }
+};
+/* ===== UI HELPERS ===== */
+function showLoaderBar(){const b=document.getElementById('loaderBar');b.style.opacity='1';b.style.width='70%';}
+function hideLoaderBar(){const b=document.getElementById('loaderBar');b.style.width='100%';setTimeout(()=>{b.style.opacity='0';b.style.width='0';},200);}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);}
+function openModal(h){const m=document.getElementById('modal');document.getElementById('modalBody').innerHTML=h;m.classList.add('show');}
+function closeModal(){document.getElementById('modal').classList.remove('show');}
+document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal();});
+function fmtMoney(n,dec=0){return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',minimumFractionDigits:dec,maximumFractionDigits:dec,notation:Math.abs(n)>=1e9?'compact':'standard'}).format(n);}
+function fmtPct(n,dec=2){return (n>=0?'+':'')+n.toFixed(dec)+'%';}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function relDate(d){return new Date(d).toLocaleDateString('en-GB',{year:'numeric',month:'short',day:'numeric'});}
+function initIcons(){if(window.lucide)lucide.createIcons();}
+function reveal(){document.querySelectorAll('.reveal').forEach(el=>{if(el.getBoundingClientRect().top<innerHeight-50)el.classList.add('in');});}
+window.addEventListener('scroll',()=>{reveal();const h=document.getElementById('header');if(scrollY>20)h.classList.add('scrolled');else h.classList.remove('scrolled');});
+document.getElementById('menuBtn').addEventListener('click',()=>document.getElementById('mobileNav').classList.add('open'));
+document.getElementById('menuClose').addEventListener('click',()=>document.getElementById('mobileNav').classList.remove('open'));
+document.querySelectorAll('[data-mobile]').forEach(a=>a.addEventListener('click',()=>document.getElementById('mobileNav').classList.remove('open')));
+
+/* ===== ROUTER ===== */
+const routes = {
+  '/home':renderHome,'/about':renderAbout,'/services':renderServices,
+  '/insights':renderInsights,'/contact':renderContact,'/portal':renderPortal
+};
+function currentPath(){const h=location.hash.replace(/^#/,'')||'/home';return h.split('?')[0];}
+function currentQuery(){const h=location.hash.replace(/^#/,'');const i=h.indexOf('?');if(i<0)return{};return Object.fromEntries(new URLSearchParams(h.slice(i+1)));}
+async function router(){
+  const path=currentPath();
+  const handler=routes[path]||renderNotFound;
+  document.querySelectorAll('.rb-nav-link').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+path));
+  const app=document.getElementById('app');
+  app.innerHTML='<div class="page-enter">'+skeletonPage()+'</div>';
+  scrollTo({top:0,behavior:'instant'});
+  try{await handler(app);}catch(e){console.error(e);app.innerHTML='<div class="p-10 text-center text-red-500">Something went wrong.</div>';}
+  initIcons();reveal();
+}
+window.addEventListener('hashchange',router);
+function skeletonPage(){return `<div class="max-w-7xl mx-auto px-6 lg:px-10 py-20"><div class="skeleton h-7 w-40 mb-6"></div><div class="skeleton h-14 w-3/4 mb-4"></div><div class="skeleton h-14 w-2/3 mb-10"></div><div class="grid md:grid-cols-3 gap-6"><div class="skeleton h-44"></div><div class="skeleton h-44"></div><div class="skeleton h-44"></div></div></div>`;}
+function renderNotFound(app){app.innerHTML=`<div class="max-w-3xl mx-auto px-6 py-32 text-center"><div class="font-display text-6xl text-charcoal mb-4">404</div><p class="text-muted mb-8">This page does not exist.</p><a href="#/home" class="btn-primary">Return home</a></div>`;}
+
+/* ===== HOME ===== */
+async function renderHome(app){
+  const [site,services,framework,insights,testimonials,clients,ticker] = await Promise.all([
+    api.get('site'),api.get('services'),api.get('framework'),api.get('insights'),api.get('testimonials'),api.get('clients'),api.get('ticker')
+  ]);
+  const featured = insights.slice(0,3);
+  app.innerHTML = `
+  <!-- HERO -->
+  <section class="hero-grad relative overflow-hidden text-white">
+    <div class="grid-bg absolute inset-0 opacity-100"></div>
+    <div class="relative max-w-7xl mx-auto px-6 lg:px-10 pt-20 pb-24 lg:pt-24 lg:pb-32">
+      <div class="grid lg:grid-cols-12 gap-12 items-end">
+        <div class="lg:col-span-7">
+          <div class="reveal eyebrow text-red mb-5"><span class="dot"></span>Independent · Aligned · Technical</div>
+          <h1 class="reveal delay-1 font-display text-5xl lg:text-7xl leading-[1.02] mb-7 font-semibold">We sit on <span class="text-red">your</span> side of the table.</h1>
+          <p class="reveal delay-2 text-lg text-[#B7BCC6] leading-relaxed max-w-2xl mb-9">Redbridge is an independent treasury, debt and risk advisor to global corporates, sponsors and growth companies. We are paid only by our clients — never by a bank, never by a counterparty.</p>
+          <div class="reveal delay-3 flex flex-wrap gap-3">
+            <a href="#/contact" class="btn-primary">Start a mandate <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+            <a href="#/services" class="btn-outline text-white">Explore our services</a>
+          </div>
+        </div>
+        <div class="lg:col-span-5 reveal delay-3">
+          <div class="bg-coal-2 border border-white/8 p-6">
+            <div class="flex items-center justify-between mb-4">
+              <div class="text-xs uppercase tracking-[.22em] text-[#888E99]">Markets — live</div>
+              <div class="flex items-center gap-1.5 text-[10px] text-[#0E7D3A]"><span class="w-1.5 h-1.5 rounded-full bg-[#0E7D3A] animate-pulse"></span> STREAMING</div>
+            </div>
+            <div id="tickerGrid" class="grid grid-cols-2 gap-x-6 gap-y-3">
+              ${ticker.map(t=>`<div class="tick-row" data-ticker="${t.lbl}"><span class="lbl flex-1">${t.lbl}</span><span class="val">${t.val}</span><span class="chg ${t.chg.startsWith('+')?'chg-up':'chg-down'}">${t.chg}</span></div>`).join('')}
+            </div>
+            <div class="mt-4 pt-4 border-t border-white/8 text-[10px] text-[#7F8694]">Indicative levels · Refreshes every 6s · Not for trading purposes.</div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal delay-4 mt-16 grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-6 max-w-4xl border-t border-white/10 pt-10">
+        <div><div class="text-3xl lg:text-4xl stat-num font-semibold text-white" data-count="${site.debtAdvised}" data-suffix="B" data-prefix="$">$0B</div><div class="text-xs uppercase tracking-wider text-[#7F8694] mt-1">Debt advised since founding</div></div>
+        <div><div class="text-3xl lg:text-4xl stat-num font-semibold text-white" data-count="${site.mandates}">0</div><div class="text-xs uppercase tracking-wider text-[#7F8694] mt-1">Mandates completed</div></div>
+        <div><div class="text-3xl lg:text-4xl stat-num font-semibold text-white" data-count="${site.countries}">0</div><div class="text-xs uppercase tracking-wider text-[#7F8694] mt-1">Countries</div></div>
+        <div><div class="text-3xl lg:text-4xl stat-num font-semibold text-white" data-count="${site.advisors}">0</div><div class="text-xs uppercase tracking-wider text-[#7F8694] mt-1">Senior advisors</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOGO MARQUEE -->
+  <section class="bg-paper border-y border-line">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-7">
+      <div class="text-xs uppercase tracking-[.25em] text-muted text-center mb-5">Trusted by leading corporates and sponsors worldwide</div>
+      <div class="marquee">
+        <div class="marquee-track">
+          ${[...clients,...clients].map(c=>`<div class="font-display text-xl text-charcoal/40 whitespace-nowrap font-medium">${c}</div>`).join('')}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="max-w-7xl mx-auto px-6 lg:px-10 py-24">
+    <div class="grid lg:grid-cols-12 gap-12 mb-12">
+      <div class="lg:col-span-5 reveal">
+        <div class="eyebrow mb-4"><span class="divider-red mr-3"></span> What we do</div>
+        <h2 class="font-display text-4xl lg:text-5xl text-charcoal leading-tight mb-4 font-semibold">Six mandates. One single accountability.</h2>
+      </div>
+      <div class="lg:col-span-6 lg:col-start-7 reveal delay-1">
+        <p class="text-lg text-muted leading-relaxed">From debt advisory to treasury operations, risk and working capital — we deliver a coordinated team, accountable to a single sponsor on the client side. Our compensation comes only from clients; never from banks, lenders or counterparties.</p>
+      </div>
+    </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-line border border-line">
+      ${services.map((s,i)=>`
+        <div class="service-card p-8 reveal delay-${(i%4)+1}" onclick="location.hash='#/services'">
+          <div class="w-12 h-12 bg-red flex items-center justify-center mb-5"><i data-lucide="${s.icon}" class="w-6 h-6 text-white"></i></div>
+          <h3 class="font-display text-xl text-charcoal mb-2 font-semibold">${s.title}</h3>
+          <p class="text-sm text-muted mb-4">${s.tagline}</p>
+          <span class="inline-flex items-center gap-1 text-sm text-red font-semibold">Learn more <i data-lucide="arrow-up-right" class="w-4 h-4"></i></span>
+        </div>`).join('')}
+    </div>
+  </section>
+
+  <!-- FRAMEWORK -->
+  <section class="bg-charcoal text-white relative overflow-hidden">
+    <div class="grid-bg absolute inset-0 opacity-50"></div>
+    <div class="relative max-w-7xl mx-auto px-6 lg:px-10 py-24">
+      <div class="grid lg:grid-cols-12 gap-16">
+        <div class="lg:col-span-5 reveal">
+          <div class="eyebrow text-red mb-4"><span class="divider-red mr-3"></span> The Redbridge framework</div>
+          <h2 class="font-display text-4xl lg:text-5xl leading-tight mb-6 font-semibold">A disciplined process, applied to every mandate.</h2>
+          <p class="text-[#B7BCC6] leading-relaxed mb-8">We do not deliver options without conviction. Every recommendation is benchmarked against real market data and stress-tested through our proprietary platform.</p>
+          <a href="#/services" class="btn-primary">Explore services <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+        </div>
+        <div class="lg:col-span-6 lg:col-start-7 space-y-10">
+          ${framework.map((s,i)=>`
+            <div class="reveal delay-${i+1} framework-step" data-n="${s.n}">
+              <h4 class="font-display text-2xl text-white mb-2 font-semibold">${s.t}</h4>
+              <p class="text-[#B7BCC6] leading-relaxed">${s.d}</p>
+            </div>`).join('')}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSIGHTS -->
+  <section class="max-w-7xl mx-auto px-6 lg:px-10 py-24">
+    <div class="flex items-end justify-between mb-12 flex-wrap gap-6 reveal">
+      <div>
+        <div class="eyebrow mb-4"><span class="divider-red mr-3"></span> Insights & data</div>
+        <h2 class="font-display text-4xl lg:text-5xl text-charcoal leading-tight max-w-xl font-semibold">Market intelligence, written by the team that uses it.</h2>
+      </div>
+      <a href="#/insights" class="btn-outline text-charcoal">All insights <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+    </div>
+    <div class="grid md:grid-cols-3 gap-8">
+      ${featured.map((p,i)=>`
+        <a href="#/insights?id=${p.id}" class="insight-tile reveal delay-${i+1}">
+          <div class="insight-thumb"><div class="thumb-overlay"></div>
+            <div class="absolute top-4 left-4 z-10"><span class="pill pill-red">${p.type}</span></div>
+            <div class="absolute bottom-4 left-4 right-4 z-10 text-white">
+              <div class="text-xs uppercase tracking-wider text-[#FF9499] mb-1 font-semibold">${p.category}</div>
+              <div class="font-display text-lg leading-tight font-semibold">${p.title}</div>
+            </div>
+          </div>
+          <div class="p-6">
+            <div class="text-xs text-muted mb-2">${relDate(p.date)} · ${p.read}</div>
+            <p class="text-sm text-muted leading-relaxed">${p.excerpt}</p>
+          </div>
+        </a>`).join('')}
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="bg-bone">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-24">
+      <div class="grid md:grid-cols-3 gap-8">
+        ${testimonials.map((t,i)=>`
+          <blockquote class="reveal delay-${i+1} bg-white p-8 border-t-2 border-red">
+            <i data-lucide="quote" class="w-6 h-6 text-red mb-4"></i>
+            <p class="text-charcoal leading-relaxed mb-6 text-[1.02rem]">"${t.quote}"</p>
+            <cite class="not-italic text-xs uppercase tracking-wider text-muted">— ${t.author}</cite>
+          </blockquote>`).join('')}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="max-w-7xl mx-auto px-6 lg:px-10 py-24">
+    <div class="bg-charcoal text-white p-12 lg:p-16 grid lg:grid-cols-12 gap-10 items-center">
+      <div class="lg:col-span-7">
+        <div class="eyebrow text-red mb-3">Begin a conversation</div>
+        <h2 class="font-display text-3xl lg:text-4xl leading-tight mb-4 font-semibold">A confidential, no-obligation review of your financing or treasury position.</h2>
+        <p class="text-[#B7BCC6] leading-relaxed">Share a few details and one of our senior advisors will be in touch within one business day.</p>
+      </div>
+      <div class="lg:col-span-5 flex lg:justify-end gap-3 flex-wrap">
+        <a href="#/contact" class="btn-primary">Start a mandate</a>
+        <a href="#/insights" class="btn-outline text-white">Read our insights</a>
+      </div>
+    </div>
+  </section>
+  `;
+  // Counter animation
+  setTimeout(()=>{
+    document.querySelectorAll('[data-count]').forEach(el=>{
+      const target=parseFloat(el.getAttribute('data-count'));
+      const suffix=el.getAttribute('data-suffix')||'';
+      const prefix=el.getAttribute('data-prefix')||'';
+      const start=0;const duration=1500;const startTs=performance.now();
+      function step(ts){
+        const t=Math.min(1,(ts-startTs)/duration);
+        const eased=1-Math.pow(1-t,3);
+        const val=start+(target-start)*eased;
+        el.textContent=prefix+(target>100?Math.round(val).toLocaleString():val.toFixed(target>10?0:1))+suffix;
+        if(t<1)requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  },300);
+  // Animated ticker
+  setInterval(()=>{
+    document.querySelectorAll('#tickerGrid .tick-row').forEach(row=>{
+      const v=row.querySelector('.val');
+      const c=row.querySelector('.chg');
+      let curr=parseFloat(v.textContent.replace(/[^\d.\-]/g,''));
+      const move=(Math.random()-0.5)*0.5;
+      const newVal=Math.max(0.001,curr+(curr*move/100));
+      const decimals=v.textContent.includes('.0')||v.textContent.split('.')[1]?.length>=4?4:2;
+      const isDollar=v.textContent.startsWith('$');
+      v.textContent=(isDollar?'$':'')+newVal.toFixed(decimals);
+      const chgNum=newVal-curr;
+      const sign=chgNum>=0?'+':'';
+      c.textContent=sign+chgNum.toFixed(decimals);
+      c.className='chg '+(chgNum>=0?'chg-up':'chg-down');
+    });
+  },6000);
+}
+
+/* ===== ABOUT ===== */
+async function renderAbout(app){
+  const [team,jobs,site] = await Promise.all([api.get('team'),api.get('jobs'),api.get('site')]);
+  app.innerHTML = `
+  <section class="bg-charcoal text-white relative overflow-hidden">
+    <div class="grid-bg absolute inset-0 opacity-50"></div>
+    <div class="relative max-w-7xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
+      <div class="eyebrow text-red mb-5">About the firm</div>
+      <h1 class="font-display text-5xl lg:text-6xl leading-[1.05] max-w-3xl font-semibold">${site.advisors}+ specialists, ${site.years} years, one alignment.</h1>
+      <p class="mt-6 text-lg text-[#B7BCC6] max-w-2xl leading-relaxed">An independent partnership of treasury, debt and risk specialists. Founded in 2000. Active across ${site.countries} countries. Compensated only by our clients.</p>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-6 lg:px-10 py-24 grid lg:grid-cols-12 gap-16">
+    <div class="lg:col-span-5 reveal">
+      <div class="eyebrow mb-3">Our story</div>
+      <h2 class="font-display text-3xl text-charcoal mb-6 font-semibold">An independent voice in a conflicted market.</h2>
+    </div>
+    <div class="lg:col-span-7 prose-rb reveal delay-1">
+      <p>Redbridge was founded in 2000 in Paris by a group of former corporate treasurers and bankers who shared a common frustration: the absence of a truly independent advisor for corporate financing decisions. The banks they had worked at were structurally conflicted. The consulting firms lacked execution credibility. There was a gap — and they decided to fill it.</p>
+      <p>Twenty-six years later, that founding model is intact. Redbridge is an independent partnership, owned and led by its operating principals. We have grown to ${site.advisors}+ senior advisors across ${site.countries} countries, with offices in London, Paris, New York, Houston and Frankfurt — but we have not changed our model.</p>
+      <p>We accept no compensation from banks, lenders or counterparties. We do not run financial products. We do not earn fees on transaction volume. The only revenue we receive is the advisory fee paid by our clients — and the only test we measure ourselves against is whether they would re-engage us tomorrow.</p>
+    </div>
+  </section>
+
+  <section class="bg-bone">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-24">
+      <div class="text-center mb-14 reveal">
+        <div class="eyebrow mb-3"><span class="divider-red mr-3"></span> Timeline</div>
+        <h2 class="font-display text-4xl text-charcoal font-semibold">Twenty-six years, one model.</h2>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-line border border-line">
+        ${[
+          {y:'2000',t:'Founded in Paris',d:'Four founding partners; an independent debt advisor for corporate clients.'},
+          {y:'2006',t:'London office opens',d:'UK and Northern European mandates begin.'},
+          {y:'2011',t:'Treasury Advisory launched',d:'Expansion beyond debt into treasury operations and risk.'},
+          {y:'2014',t:'Houston office opens',d:'US energy and commodities practice established.'},
+          {y:'2018',t:'New York office opens',d:'Sponsor finance and US corporate platform.'},
+          {y:'2021',t:'Risk Solutions practice scales',d:'FX, rates and commodity hedging advisory across regions.'},
+          {y:'2024',t:'Treasury Portal launched',d:'Proprietary benchmarking and analytics platform for clients.'},
+          {y:'2026',t:'$'+site.debtAdvised+'B advised',d:'Cumulative debt advised since founding.'}
+        ].map((e,i)=>`
+          <div class="p-8 bg-white reveal delay-${(i%4)+1}">
+            <div class="text-3xl font-display text-red mb-3 font-bold">${e.y}</div>
+            <div class="font-semibold text-charcoal mb-2">${e.t}</div>
+            <div class="text-sm text-muted leading-relaxed">${e.d}</div>
+          </div>`).join('')}
+      </div>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-6 lg:px-10 py-24">
+    <div class="text-center mb-14 reveal">
+      <div class="eyebrow mb-3"><span class="divider-red mr-3"></span> Leadership</div>
+      <h2 class="font-display text-4xl text-charcoal font-semibold">The partners who lead the firm.</h2>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      ${team.map((m,i)=>`
+        <div class="card p-7 reveal delay-${(i%4)+1}">
+          <div class="w-14 h-14 bg-charcoal flex items-center justify-center text-white font-display text-lg mb-4 font-semibold">${m.initials}</div>
+          <div class="font-semibold text-charcoal">${m.name}</div>
+          <div class="text-xs uppercase tracking-wider text-red mt-1 mb-3 font-semibold">${m.role}</div>
+          <p class="text-sm text-muted leading-relaxed">${m.bio}</p>
+        </div>`).join('')}
+    </div>
+  </section>
+
+  <section class="bg-charcoal text-white">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-24 grid lg:grid-cols-12 gap-12 items-start">
+      <div class="lg:col-span-5 reveal">
+        <div class="eyebrow text-red mb-3"><span class="divider-red mr-3"></span> Careers</div>
+        <h2 class="font-display text-4xl mb-6 font-semibold">Build your career inside an independent advisor.</h2>
+        <p class="text-[#B7BCC6] leading-relaxed mb-6">We hire experienced practitioners from corporate treasury, banking and the rating agencies. The work is intellectually rigorous; the alignment is real; the career trajectory is partner-track.</p>
+        <a href="#/contact" class="btn-primary">Get in touch <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+      </div>
+      <div class="lg:col-span-7 space-y-3">
+        ${jobs.map((j,i)=>`
+          <div class="reveal delay-${(i%4)+1} flex items-center justify-between gap-6 bg-coal-2 px-6 py-5 border border-white/8 hover:border-red transition cursor-pointer" onclick="toast('Application: ${escapeHtml(j.title)} — application form opened (demo)')">
+            <div>
+              <div class="font-semibold text-white">${j.title}</div>
+              <div class="text-xs text-[#9098A4] mt-1">${j.team} · ${j.location} · ${j.type}</div>
+            </div>
+            <i data-lucide="arrow-up-right" class="w-5 h-5 text-red"></i>
+          </div>`).join('')}
+      </div>
+    </div>
+  </section>
+  `;
+}
+
+/* ===== SERVICES ===== */
+async function renderServices(app){
+  const services = await api.get('services');
+  app.innerHTML = `
+  <section class="bg-paper border-b border-line">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-24">
+      <div class="eyebrow mb-4"><span class="divider-red mr-3"></span> Services</div>
+      <h1 class="font-display text-5xl lg:text-6xl text-charcoal leading-[1.05] max-w-3xl mb-6 font-semibold">Six mandates, delivered by a single accountable team.</h1>
+      <p class="text-lg text-muted max-w-2xl leading-relaxed">We do not separate strategy from execution. The senior people you meet in pitch sit on the line through to closing.</p>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-6 lg:px-10 py-20">
+    <div class="grid lg:grid-cols-2 gap-px bg-line border border-line">
+      ${services.map((s,i)=>`
+        <div class="bg-white p-10 reveal delay-${(i%4)+1}">
+          <div class="flex items-start gap-5">
+            <div class="w-14 h-14 bg-red flex items-center justify-center flex-shrink-0"><i data-lucide="${s.icon}" class="w-7 h-7 text-white"></i></div>
+            <div>
+              <h3 class="font-display text-2xl text-charcoal mb-1 font-semibold">${s.title}</h3>
+              <div class="text-xs uppercase tracking-wider text-red mb-4 font-semibold">${s.tagline}</div>
+              <p class="text-muted leading-relaxed mb-5">${s.summary}</p>
+              <ul class="grid sm:grid-cols-2 gap-x-6 gap-y-2 mb-6">
+                ${s.points.map(p=>`<li class="flex items-start gap-2 text-sm text-charcoal"><i data-lucide="check" class="w-4 h-4 text-red mt-0.5 flex-shrink-0"></i>${p}</li>`).join('')}
+              </ul>
+              <button class="text-sm font-semibold text-charcoal inline-flex items-center gap-1 hover:gap-2 transition-all" onclick="openServiceModal('${s.id}')">Discuss this mandate <i data-lucide="arrow-right" class="w-4 h-4 text-red"></i></button>
+            </div>
+          </div>
+        </div>`).join('')}
+    </div>
+  </section>
+
+  <section class="bg-bone">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-24">
+      <div class="grid lg:grid-cols-2 gap-16 items-start">
+        <div class="reveal">
+          <div class="eyebrow mb-3"><span class="divider-red mr-3"></span> FAQ</div>
+          <h2 class="font-display text-4xl text-charcoal mb-6 font-semibold">Common questions from prospective clients.</h2>
+          <p class="text-muted leading-relaxed">If your question is not here, please use the contact form to begin a private conversation with a partner.</p>
+        </div>
+        <div class="reveal delay-1">
+          ${[
+            {q:'How are you different from a bank or a consulting firm?',a:'Banks earn fees by selling products. Consulting firms typically lack execution accountability. We sit between the two — we deliver the same execution rigour as a bank, but as a fiduciary on the client side, paid only by you.'},
+            {q:'What is your typical mandate fee?',a:'Fees are structured against the scope and complexity of the mandate, agreed up-front. Most engagements are a fixed retainer with a success component tied to measurable outcomes. We do not earn fees on transaction volume.'},
+            {q:'Do you have a minimum client size?',a:'Our typical mandate is with a corporate with revenues of $500M or more, or a private equity sponsor with $1B+ of committed capital. We make exceptions for inaugural issuers, growth companies and family-owned businesses.'},
+            {q:'How are you regulated?',a:'Redbridge is authorised and regulated by the Financial Conduct Authority in the UK, the Autorité des Marchés Financiers in France, and registered as a Municipal Advisor with the SEC in the US.'},
+            {q:'How long does a typical mandate take?',a:'Debt refinancing mandates: 3–4 months from kickoff to closing. Treasury target operating model design: 8–12 weeks. TMS selection: 4–6 months end-to-end. Bespoke engagements are scoped individually.'}
+          ].map(f=>`
+            <div class="accordion-item">
+              <button class="accordion-trigger" onclick="this.parentElement.classList.toggle('open')">${f.q} <i data-lucide="plus" class="w-5 h-5 accordion-icon"></i></button>
+              <div class="accordion-content">${f.a}</div>
+            </div>`).join('')}
+        </div>
+      </div>
+    </div>
+  </section>
+  `;
+}
+function openServiceModal(id){
+  const s = DATA.services.find(x=>x.id===id);
+  openModal(`
+    <button onclick="closeModal()" class="absolute top-4 right-4 text-muted hover:text-charcoal"><i data-lucide="x" class="w-5 h-5"></i></button>
+    <div class="eyebrow mb-2">${s.tagline}</div>
+    <h3 class="font-display text-2xl text-charcoal mb-4 font-semibold">${s.title}</h3>
+    <p class="text-muted leading-relaxed mb-6">${s.summary}</p>
+    <ul class="space-y-2 mb-8">${s.points.map(p=>`<li class="flex gap-2 text-sm text-charcoal"><i data-lucide="check" class="w-4 h-4 text-red mt-0.5"></i>${p}</li>`).join('')}</ul>
+    <a href="#/contact" onclick="closeModal()" class="btn-primary w-full justify-center">Discuss with an advisor <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+  `);
+  initIcons();
+}
+
+/* ===== INSIGHTS ===== */
+async function renderInsights(app){
+  const q = currentQuery();
+  if(q.id) return renderInsightDetail(app, q.id);
+  const items = await api.get('insights');
+  const categories = ['All',...new Set(items.map(i=>i.category))];
+  app.innerHTML = `
+  <section class="bg-paper border-b border-line">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-20">
+      <div class="eyebrow mb-3"><span class="divider-red mr-3"></span> Insights & data</div>
+      <h1 class="font-display text-5xl lg:text-6xl text-charcoal leading-[1.05] max-w-3xl font-semibold">Market intelligence, written by the team that uses it.</h1>
+      <p class="mt-6 text-lg text-muted max-w-2xl leading-relaxed">Quarterly debt market updates, our flagship Treasury Operations Benchmark, case studies and the practical playbooks our practitioners have published over more than two decades.</p>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-6 lg:px-10 py-16">
+    <div class="flex flex-wrap gap-4 items-center justify-between mb-10">
+      <div class="flex flex-wrap gap-1 border-b border-line" id="catTabs">
+        ${categories.map((c,i)=>`<button class="tab ${i===0?'active':''}" data-cat="${c}">${c}</button>`).join('')}
+      </div>
+      <div class="relative">
+        <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted"></i>
+        <input id="insightSearch" type="text" placeholder="Search insights..." class="input pl-10 w-72">
+      </div>
+    </div>
+    <div id="insightGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+    <div id="insightEmpty" class="hidden text-center py-20 text-muted">No insights match your filters.</div>
+  </section>
+  `;
+  const grid = document.getElementById('insightGrid');
+  let activeCat='All',activeSearch='';
+  function paint(){
+    let filtered=items;
+    if(activeCat!=='All')filtered=filtered.filter(i=>i.category===activeCat);
+    if(activeSearch)filtered=filtered.filter(i=>(i.title+' '+i.excerpt+' '+i.author).toLowerCase().includes(activeSearch.toLowerCase()));
+    document.getElementById('insightEmpty').classList.toggle('hidden',filtered.length>0);
+    grid.innerHTML=filtered.map(p=>`
+      <a href="#/insights?id=${p.id}" class="insight-tile">
+        <div class="insight-thumb"><div class="thumb-overlay"></div>
+          <div class="absolute top-4 left-4 z-10"><span class="pill pill-red">${p.type}</span></div>
+          <div class="absolute bottom-4 left-4 right-4 z-10 text-white">
+            <div class="text-xs uppercase tracking-wider text-[#FF9499] mb-1 font-semibold">${p.category}</div>
+            <div class="font-display text-lg leading-tight font-semibold">${p.title}</div>
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="text-xs text-muted mb-2">${relDate(p.date)} · ${p.read} · ${p.author.split('·')[0].trim()}</div>
+          <p class="text-sm text-muted leading-relaxed">${p.excerpt}</p>
+        </div>
+      </a>`).join('');
+    initIcons();
+  }
+  paint();
+  document.querySelectorAll('#catTabs .tab').forEach(t=>t.addEventListener('click',()=>{
+    document.querySelectorAll('#catTabs .tab').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');activeCat=t.dataset.cat;paint();
+  }));
+  document.getElementById('insightSearch').addEventListener('input',e=>{activeSearch=e.target.value;paint();});
+}
+async function renderInsightDetail(app, id){
+  const item = await api.get('insights',{ find: x=>x.id===id });
+  if(!item){app.innerHTML='<div class="p-10 text-center text-muted">Article not found.</div>';return;}
+  const related = (await api.get('insights')).filter(i=>i.id!==id).slice(0,3);
+  app.innerHTML = `
+  <article class="max-w-3xl mx-auto px-6 lg:px-10 py-16 lg:py-24">
+    <a href="#/insights" class="text-sm text-red inline-flex items-center gap-1 mb-8 hover:gap-2 transition-all font-semibold"><i data-lucide="arrow-left" class="w-4 h-4"></i> All insights</a>
+    <div class="eyebrow mb-4">${item.type} · ${item.category}</div>
+    <h1 class="font-display text-4xl lg:text-5xl text-charcoal leading-[1.1] mb-6 font-semibold">${item.title}</h1>
+    <div class="flex items-center gap-4 text-sm text-muted border-b border-line pb-6 mb-10">
+      <div class="w-12 h-12 rounded-full bg-charcoal flex items-center justify-center text-white font-display font-semibold">${item.author.split(' ').map(w=>w[0]).slice(0,2).join('')}</div>
+      <div>
+        <div class="text-charcoal font-semibold">${item.author}</div>
+        <div class="text-xs">${item.role} · ${relDate(item.date)} · ${item.read}</div>
+      </div>
+    </div>
+    <p class="font-display text-2xl text-charcoal leading-relaxed mb-10 font-medium">${item.excerpt}</p>
+    <div class="prose-rb">
+      ${item.body.map(p=>{
+        if(p.startsWith('h3:'))return `<h3>${p.slice(3)}</h3>`;
+        if(p.startsWith('q:'))return `<blockquote>${p.slice(2)}</blockquote>`;
+        if(p.startsWith('ul:'))return `<ul>${p.slice(3).split('|').map(li=>`<li>${li}</li>`).join('')}</ul>`;
+        return `<p>${p}</p>`;
+      }).join('')}
+    </div>
+    <div class="mt-12 pt-8 border-t border-line flex flex-wrap items-center gap-3">
+      <span class="text-xs uppercase tracking-wider text-muted">Share:</span>
+      <button class="w-9 h-9 border border-line flex items-center justify-center hover:border-red transition" onclick="toast('Link copied')"><i data-lucide="link" class="w-4 h-4 text-charcoal"></i></button>
+      <button class="w-9 h-9 border border-line flex items-center justify-center hover:border-red transition" onclick="toast('Shared to LinkedIn (demo)')"><i data-lucide="linkedin" class="w-4 h-4 text-charcoal"></i></button>
+      <button class="w-9 h-9 border border-line flex items-center justify-center hover:border-red transition" onclick="toast('Shared to X (demo)')"><i data-lucide="twitter" class="w-4 h-4 text-charcoal"></i></button>
+    </div>
+  </article>
+  <section class="bg-paper border-t border-line">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-20">
+      <h2 class="font-display text-3xl text-charcoal mb-10 font-semibold">Related insights</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        ${related.map(p=>`
+          <a href="#/insights?id=${p.id}" class="insight-tile">
+            <div class="insight-thumb"><div class="thumb-overlay"></div>
+              <div class="absolute top-4 left-4 z-10"><span class="pill pill-red">${p.type}</span></div>
+              <div class="absolute bottom-4 left-4 right-4 z-10 text-white">
+                <div class="text-xs uppercase tracking-wider text-[#FF9499] mb-1 font-semibold">${p.category}</div>
+                <div class="font-display text-lg leading-tight font-semibold">${p.title}</div>
+              </div>
+            </div>
+            <div class="p-6"><div class="text-xs text-muted mb-2">${relDate(p.date)} · ${p.read}</div><p class="text-sm text-muted leading-relaxed">${p.excerpt}</p></div>
+          </a>`).join('')}
+      </div>
+    </div>
+  </section>
+  `;
+}
+
+/* ===== CONTACT ===== */
+async function renderContact(app){
+  app.innerHTML = `
+  <section class="bg-charcoal text-white relative overflow-hidden">
+    <div class="grid-bg absolute inset-0 opacity-50"></div>
+    <div class="relative max-w-7xl mx-auto px-6 lg:px-10 py-20">
+      <div class="eyebrow text-red mb-3">Contact</div>
+      <h1 class="font-display text-5xl lg:text-6xl leading-[1.05] max-w-3xl font-semibold">Begin a confidential conversation.</h1>
+      <p class="mt-6 text-lg text-[#B7BCC6] max-w-2xl">A senior member of our team will respond within one business day. All enquiries are handled in strict confidence.</p>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-6 lg:px-10 py-20 grid lg:grid-cols-5 gap-12">
+    <div class="lg:col-span-3">
+      <form id="contactForm" class="space-y-5">
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div><label class="text-xs uppercase tracking-wider text-muted mb-1 block font-semibold">First name</label><input class="input" name="firstName" required></div>
+          <div><label class="text-xs uppercase tracking-wider text-muted mb-1 block font-semibold">Last name</label><input class="input" name="lastName" required></div>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div><label class="text-xs uppercase tracking-wider text-muted mb-1 block font-semibold">Work email</label><input class="input" type="email" name="email" required></div>
+          <div><label class="text-xs uppercase tracking-wider text-muted mb-1 block font-semibold">Phone</label><input class="input" name="phone"></div>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div><label class="text-xs uppercase tracking-wider text-muted mb-1 block font-semibold">Company</label><input class="input" name="company" required></div>
+          <div><label class="text-xs uppercase tracking-wider text-muted mb-1 block font-semibold">Role</label><input class="input" name="role" required></div>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div><label class="text-xs uppercase tracking-wider text-muted mb-1 block font-semibold">Annual revenue</label>
+            <select class="select" name="revenue">
+              <option>Below $250M</option><option>$250M – $1B</option><option selected>$1B – $5B</option><option>$5B – $25B</option><option>$25B+</option>
+            </select>
+          </div>
+          <div><label class="text-xs uppercase tracking-wider text-muted mb-1 block font-semibold">Country</label><input class="input" name="country" required></div>
+        </div>
+        <div><label class="text-xs uppercase tracking-wider text-muted mb-1 block font-semibold">Area of interest</label>
+          <select class="select" name="interest">
+            <option>Debt Advisory</option><option>Treasury Advisory</option><option>Interest Rate, FX & Commodity Risk</option>
+            <option>Working Capital & Trade Finance</option><option>Transaction Financing</option><option>Rating & Capital Structure</option>
+          </select>
+        </div>
+        <div><label class="text-xs uppercase tracking-wider text-muted mb-1 block font-semibold">How can we help?</label><textarea class="textarea" name="message" rows="5" required></textarea></div>
+        <div class="flex items-start gap-3 text-sm text-muted">
+          <input type="checkbox" name="consent" required class="mt-1">
+          <span>I consent to Redbridge processing this information in line with the firm’s privacy policy. All enquiries are treated in strict confidence and not shared with third parties.</span>
+        </div>
+        <button type="submit" class="btn-primary" id="submitBtn">
+          <span class="lbl">Send enquiry</span>
+          <i data-lucide="arrow-right" class="w-4 h-4 lbl"></i>
+        </button>
+      </form>
+    </div>
+    <aside class="lg:col-span-2 space-y-6">
+      <div class="bg-paper p-7">
+        <div class="eyebrow mb-3">New mandates</div>
+        <div class="text-charcoal font-semibold">Mandate Origination</div>
+        <div class="text-muted text-sm mt-1">+44 (0)20 7946 8420</div>
+        <div class="text-muted text-sm">mandates@redbridgeadvisory.com</div>
+      </div>
+      <div class="bg-paper p-7">
+        <div class="eyebrow mb-3">Existing clients</div>
+        <p class="text-sm text-muted mb-3">Please contact your engagement partner or sign in to the Treasury Portal.</p>
+        <a href="#/portal" class="text-sm text-charcoal font-semibold inline-flex items-center gap-1 hover:gap-2 transition-all">Open Treasury Portal <i data-lucide="arrow-right" class="w-4 h-4 text-red"></i></a>
+      </div>
+      <div class="bg-paper p-7">
+        <div class="eyebrow mb-4">Offices</div>
+        <div class="space-y-4 text-sm">
+          ${[
+            ['London (HQ)','22 Bishopsgate, EC2N 4BQ','+44 (0)20 7946 8420'],
+            ['Paris','11 Rue Royale, 75008','+33 (0)1 84 80 4500'],
+            ['New York','500 Fifth Avenue, 10110','+1 (212) 555 1840'],
+            ['Houston','1100 Louisiana St, 77002','+1 (713) 555 2200'],
+            ['Frankfurt','Westhafen Tower, 60327','+49 69 5050 2110']
+          ].map(o=>`<div><div class="font-semibold text-charcoal">${o[0]}</div><div class="text-muted">${o[1]}</div><div class="text-muted">${o[2]}</div></div>`).join('')}
+        </div>
+      </div>
+    </aside>
+  </section>
+  `;
+  document.getElementById('contactForm').addEventListener('submit', async e=>{
+    e.preventDefault();
+    const fd = Object.fromEntries(new FormData(e.target));
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<i data-lucide="loader" class="w-4 h-4 spin"></i> Sending...';
+    initIcons();
+    const res = await api.submit('/contact', fd);
+    if(res.ok){
+      e.target.reset();
+      openModal(`
+        <button onclick="closeModal()" class="absolute top-4 right-4 text-muted hover:text-charcoal"><i data-lucide="x" class="w-5 h-5"></i></button>
+        <div class="w-14 h-14 bg-red flex items-center justify-center mb-5"><i data-lucide="check" class="w-7 h-7 text-white"></i></div>
+        <h3 class="font-display text-2xl text-charcoal mb-3 font-semibold">Thank you — your enquiry has been received.</h3>
+        <p class="text-muted leading-relaxed mb-4">A senior member of our team will be in touch within one business day at the email address you provided.</p>
+        <div class="text-xs text-muted">Reference: <span class="font-mono text-charcoal">${res.id}</span></div>
+        <button onclick="closeModal()" class="btn-primary mt-6 w-full justify-center">Close</button>
+      `);
+      initIcons();
+    }
+    btn.disabled = false;
+    btn.innerHTML = '<span class="lbl">Send enquiry</span> <i data-lucide="arrow-right" class="w-4 h-4 lbl"></i>';
+    initIcons();
+  });
+}
+
+/* ===== TREASURY PORTAL ===== */
+let portalAuth = null;
+async function renderPortal(app){
+  if(!portalAuth) return renderPortalLogin(app);
+  return renderPortalDashboard(app);
+}
+function renderPortalLogin(app){
+  app.innerHTML = `
+  <section class="portal-shell grid lg:grid-cols-2 min-h-[80vh]">
+    <div class="hero-grad relative overflow-hidden p-12 lg:p-16 flex flex-col justify-between text-white">
+      <div class="grid-bg absolute inset-0 opacity-50"></div>
+      <div class="relative">
+        <div class="eyebrow text-red mb-4">Treasury Portal</div>
+        <h2 class="font-display text-4xl lg:text-5xl leading-tight max-w-md font-semibold">Live treasury KPIs, benchmarks and mandate dashboards.</h2>
+      </div>
+      <div class="relative text-sm text-[#9098A4] max-w-md">
+        <p>The Redbridge Treasury Portal is the proprietary platform we provide to client treasury teams — combining live KPIs, benchmark data from the Treasury Operations Benchmark, and live mandate progress reports.</p>
+      </div>
+    </div>
+    <div class="p-12 lg:p-16 flex items-center justify-center bg-white">
+      <form id="loginForm" class="w-full max-w-md">
+        <div class="mb-8">
+          <h1 class="font-display text-3xl text-charcoal mb-2 font-semibold">Sign in</h1>
+          <p class="text-sm text-muted">Use your corporate email and portal credentials.</p>
+        </div>
+        <div class="space-y-5">
+          <div><label class="text-xs uppercase tracking-wider text-muted mb-1 block font-semibold">Email</label><input class="input" name="email" type="email" placeholder="treasury@yourcompany.com" required></div>
+          <div><label class="text-xs uppercase tracking-wider text-muted mb-1 block font-semibold">Password</label><input class="input" name="password" type="password" placeholder="••••••••" required></div>
+          <div class="flex items-center justify-between text-sm">
+            <label class="flex gap-2 items-center"><input type="checkbox"> Remember this device</label>
+            <a href="#" class="text-red hover:underline font-semibold">SSO sign-in</a>
+          </div>
+        </div>
+        <button type="submit" class="btn-primary w-full mt-6 justify-center" id="loginBtn"><span class="lbl">Sign in</span></button>
+        <div id="loginErr" class="text-sm text-red-700 mt-3 hidden"></div>
+        <div class="mt-8 p-4 bg-paper border border-line text-xs text-muted">
+          <strong class="text-charcoal block mb-1">Demo credentials</strong>
+          Use any email and a password of 4+ characters to enter the demo portal.
+        </div>
+      </form>
+    </div>
+  </section>`;
+  document.getElementById('loginForm').addEventListener('submit', async e=>{
+    e.preventDefault();
+    const fd = Object.fromEntries(new FormData(e.target));
+    const btn = document.getElementById('loginBtn');
+    btn.disabled = true; btn.innerHTML = '<i data-lucide="loader" class="w-4 h-4 spin"></i> Signing in...';
+    initIcons();
+    const r = await api.login(fd.email, fd.password);
+    if(r.ok){portalAuth = r.user; renderPortalDashboard(app);}
+    else {const err = document.getElementById('loginErr'); err.textContent = r.error; err.classList.remove('hidden'); btn.disabled = false; btn.innerHTML = '<span class="lbl">Sign in</span>';}
+  });
+}
+async function renderPortalDashboard(app){
+  const t = await api.get('treasury');
+  app.innerHTML = `
+  <div class="portal-shell grid lg:grid-cols-[260px_1fr]">
+    <aside class="portal-sidebar p-6 lg:min-h-[calc(100vh-80px)]">
+      <div class="flex items-center gap-3 mb-8">
+        <div class="w-10 h-10 bg-red flex items-center justify-center text-white font-display font-bold">${portalAuth.name.split(' ').map(w=>w[0]).join('').slice(0,2)}</div>
+        <div>
+          <div class="text-white font-semibold text-sm">${portalAuth.name}</div>
+          <div class="text-[10px] text-[#9098A4] uppercase tracking-wider">${portalAuth.team} · ${portalAuth.accountId}</div>
+        </div>
+      </div>
+      <nav class="space-y-1">
+        <a class="active" data-tab="overview"><i data-lucide="gauge" class="w-4 h-4"></i> Treasury overview</a>
+        <a data-tab="cash"><i data-lucide="wallet" class="w-4 h-4"></i> Cash & liquidity</a>
+        <a data-tab="debt"><i data-lucide="banknote" class="w-4 h-4"></i> Debt facilities</a>
+        <a data-tab="risk"><i data-lucide="shield" class="w-4 h-4"></i> FX & rates</a>
+        <a data-tab="benchmarks"><i data-lucide="bar-chart-3" class="w-4 h-4"></i> Benchmarks</a>
+        <a data-tab="mandates"><i data-lucide="briefcase" class="w-4 h-4"></i> Active mandates</a>
+        <a data-tab="documents"><i data-lucide="file-text" class="w-4 h-4"></i> Documents</a>
+      </nav>
+      <div class="mt-10 pt-6 border-t border-white/10">
+        <div class="text-[10px] uppercase tracking-wider text-[#9098A4] mb-2">Your engagement partner</div>
+        <div class="text-sm text-white font-semibold">${portalAuth.advisor}</div>
+        <div class="text-xs text-[#9098A4] mt-1">Head of Treasury Advisory · London</div>
+        <button class="btn-primary mt-4 w-full justify-center text-sm" onclick="toast('Secure message draft opened')"><i data-lucide="send" class="w-4 h-4"></i> Send message</button>
+      </div>
+      <button onclick="portalAuth=null;router();" class="mt-6 text-xs text-[#9098A4] hover:text-red flex gap-2 items-center"><i data-lucide="log-out" class="w-3 h-3"></i> Sign out</button>
+    </aside>
+    <main class="p-8 lg:p-12">
+      <div class="flex flex-wrap items-end justify-between gap-4 mb-8">
+        <div>
+          <div class="eyebrow mb-2">Treasury overview</div>
+          <h1 class="font-display text-3xl lg:text-4xl text-charcoal font-semibold">Good afternoon, ${portalAuth.name.split(' ')[0]}.</h1>
+          <div class="text-sm text-muted mt-1">As of close, ${new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})} · refreshed live</div>
+        </div>
+        <div class="flex gap-2">
+          <button class="btn-outline text-charcoal text-sm" onclick="toast('Cash flash report exported')"><i data-lucide="download" class="w-4 h-4"></i> Cash flash</button>
+          <button class="btn-primary text-sm" onclick="toast('Scheduling request sent to ${portalAuth.advisor}')"><i data-lucide="calendar" class="w-4 h-4"></i> Schedule review</button>
+        </div>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-line border border-line mb-8">
+        <div class="kpi"><div class="text-xs uppercase tracking-wider text-muted mb-2 font-semibold">Total cash</div><div class="text-2xl font-display font-semibold text-charcoal stat-num">${fmtMoney(t.cashTotal)}</div><div class="text-xs delta-up mt-2 font-semibold">▲ ${fmtMoney(t.cashChange)} (${fmtPct(t.cashChangePct)}) WoW</div></div>
+        <div class="kpi"><div class="text-xs uppercase tracking-wider text-muted mb-2 font-semibold">RCF utilisation</div><div class="text-2xl font-display font-semibold text-charcoal stat-num">${t.rcfUtilisation}%</div><div class="text-xs text-muted mt-2">€480M drawn of €1.2B</div></div>
+        <div class="kpi"><div class="text-xs uppercase tracking-wider text-muted mb-2 font-semibold">Avg. funding rate</div><div class="text-2xl font-display font-semibold text-charcoal stat-num">${t.avgFundingRate}%</div><div class="text-xs delta-up mt-2 font-semibold">▼ 18 bps QoQ</div></div>
+        <div class="kpi"><div class="text-xs uppercase tracking-wider text-muted mb-2 font-semibold">Bank accounts</div><div class="text-2xl font-display font-semibold text-charcoal stat-num">${t.bankAccounts}</div><div class="text-xs delta-up mt-2 font-semibold">▼ ${Math.abs(t.bankChange)} this quarter</div></div>
+      </div>
+
+      <div class="grid lg:grid-cols-3 gap-6 mb-8">
+        <div class="lg:col-span-2 bg-white border border-line p-6">
+          <div class="flex justify-between items-end mb-4">
+            <div>
+              <div class="font-semibold text-charcoal">Reference rates — trailing 6 quarters</div>
+              <div class="text-xs text-muted">SOFR · EURIBOR · SONIA · indicative levels</div>
+            </div>
+            <div class="flex gap-2">
+              <button class="text-xs px-3 py-1 bg-bone text-charcoal font-semibold">2Y</button>
+              <button class="text-xs px-3 py-1 text-muted">5Y</button>
+              <button class="text-xs px-3 py-1 text-muted">10Y</button>
+            </div>
+          </div>
+          <canvas id="chartRates" height="120"></canvas>
+        </div>
+        <div class="bg-white border border-line p-6">
+          <div class="font-semibold text-charcoal mb-1">Cash by currency</div>
+          <div class="text-xs text-muted mb-4">In USD equivalent (millions)</div>
+          <canvas id="chartCcy" height="160"></canvas>
+          <div class="mt-4 space-y-2">
+            ${t.cashByCurrency.map(c=>`<div class="flex justify-between text-xs"><span class="flex gap-2 items-center text-charcoal font-semibold"><span style="width:8px;height:8px;background:${c.color};display:inline-block"></span>${c.ccy}</span><span class="text-muted">$${c.value}M</span></div>`).join('')}
+          </div>
+        </div>
+      </div>
+
+      <div class="grid lg:grid-cols-3 gap-6 mb-8">
+        <div class="lg:col-span-2 bg-white border border-line">
+          <div class="px-6 py-4 border-b border-line flex justify-between items-center"><div class="font-semibold text-charcoal">Debt facilities</div><a class="text-xs text-red cursor-pointer font-semibold" onclick="toast('Facility schedule exported')">Export ▾</a></div>
+          <table class="table">
+            <thead><tr><th>Facility</th><th>Type</th><th class="text-right">Limit</th><th class="text-right">Drawn</th><th class="text-right">Maturity</th><th>Status</th></tr></thead>
+            <tbody>
+              ${t.facilities.map(f=>{
+                const pct=Math.round((f.drawn/f.limit)*100);
+                return `<tr>
+                  <td><div class="font-semibold text-charcoal">${f.name}</div><div class="text-xs text-muted mt-0.5">Utilisation ${pct}%</div></td>
+                  <td><span class="pill pill-grey">${f.type}</span></td>
+                  <td class="text-right font-mono">${fmtMoney(f.limit)}</td>
+                  <td class="text-right font-mono">${fmtMoney(f.drawn)}</td>
+                  <td class="text-right text-muted">${relDate(f.maturity)}</td>
+                  <td><span class="pill pill-${f.status==='Active'?'green':'amber'}">${f.status}</span></td>
+                </tr>`;
+              }).join('')}
+            </tbody>
+          </table>
+        </div>
+        <div class="bg-white border border-line">
+          <div class="px-6 py-4 border-b border-line font-semibold text-charcoal">Recent activity</div>
+          <ul class="divide-y divide-[var(--rb-line)]">
+            ${t.activity.map(a=>{
+              const cls = a.status==='Available'?'pill-amber':a.status==='Confirmed'?'pill-green':'pill-grey';
+              return `<li class="px-6 py-4">
+                <div class="flex justify-between items-start mb-1"><span class="text-xs uppercase tracking-wider text-muted font-semibold">${a.type}</span><span class="pill ${cls}">${a.status}</span></div>
+                <div class="text-sm text-charcoal">${a.detail}</div>
+                <div class="text-xs text-muted mt-1">${relDate(a.date)}</div>
+              </li>`;
+            }).join('')}
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-white border border-line">
+        <div class="px-6 py-4 border-b border-line flex justify-between items-center">
+          <div>
+            <div class="font-semibold text-charcoal">FX exposure & hedging</div>
+            <div class="text-xs text-muted mt-0.5">Top exposures · ${t.fxExposureCovered}% covered overall · MTM ${fmtMoney(t.hedgeMTM)}</div>
+          </div>
+          <a class="text-xs text-red font-semibold cursor-pointer" onclick="toast('Hedging report opened')">View report</a>
+        </div>
+        <table class="table">
+          <thead><tr><th>Pair</th><th class="text-right">Exposure</th><th>Hedge ratio</th><th class="text-right">MTM</th><th>Status</th></tr></thead>
+          <tbody>
+            ${t.fxExposure.map(f=>{
+              const cls = f.hedged>=85?'pill-green':f.hedged>=70?'pill-amber':'pill-red';
+              return `<tr>
+                <td class="font-semibold text-charcoal">${f.pair}</td>
+                <td class="text-right font-mono">${fmtMoney(f.exposure)}</td>
+                <td><div class="flex items-center gap-3 max-w-xs">
+                  <div class="flex-1 h-1.5 bg-bone"><div style="width:${f.hedged}%;background:var(--rb-red);height:100%"></div></div>
+                  <span class="text-xs text-charcoal font-semibold">${f.hedged}%</span>
+                </div></td>
+                <td class="text-right font-mono ${f.mtm>=0?'text-green-700':'text-red-700'}">${fmtMoney(f.mtm)}</td>
+                <td><span class="pill ${cls}">${f.hedged>=85?'On policy':f.hedged>=70?'Monitor':'Action'}</span></td>
+              </tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>`;
+  setTimeout(()=>{
+    const r = t.rateHistory;
+    new Chart(document.getElementById('chartRates'),{
+      type:'line',
+      data:{ labels:r.labels, datasets:[
+        { label:'SOFR', data:r.sofr, borderColor:'#B5141A', backgroundColor:'rgba(181,20,26,.08)', tension:.35, fill:true, borderWidth:2, pointRadius:0 },
+        { label:'EURIBOR 3M', data:r.euribor, borderColor:'#1A1D24', tension:.35, fill:false, borderWidth:1.5, pointRadius:0 },
+        { label:'SONIA', data:r.sonia, borderColor:'#5C6573', tension:.35, fill:false, borderWidth:1.5, borderDash:[4,4], pointRadius:0 }
+      ]},
+      options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'bottom', labels:{ boxWidth:12, font:{ size:11 } } } }, scales:{ y:{ grid:{ color:'#F0EBE0' }, ticks:{ font:{ size:11 }, callback:v=>v+'%' } }, x:{ grid:{ display:false }, ticks:{ font:{ size:11 } } } } }
+    });
+    new Chart(document.getElementById('chartCcy'),{
+      type:'doughnut',
+      data:{ labels:t.cashByCurrency.map(c=>c.ccy), datasets:[{ data:t.cashByCurrency.map(c=>c.value), backgroundColor:t.cashByCurrency.map(c=>c.color), borderWidth:0 }] },
+      options:{ cutout:'66%', plugins:{ legend:{ display:false } }, responsive:true, maintainAspectRatio:true }
+    });
+  },100);
+  document.querySelectorAll('.portal-sidebar [data-tab]').forEach(a=>a.addEventListener('click',()=>{
+    document.querySelectorAll('.portal-sidebar a').forEach(x=>x.classList.remove('active'));
+    a.classList.add('active');
+    if(a.dataset.tab!=='overview') toast('Section "'+a.dataset.tab+'" is part of the full Treasury Portal');
+  }));
+}
+
+/* ===== INIT ===== */
+window.addEventListener('load',()=>{initIcons();router();});
+if(!location.hash) location.hash='/home';
+</script>
+</body>
+</html>
